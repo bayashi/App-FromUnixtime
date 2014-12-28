@@ -46,7 +46,18 @@ sub _from_unixtime {
     }
 
     my $date = eval { strftime($config->{format}, localtime($maybe_unixtime)) };
-    return $@ ? $maybe_unixtime : "$maybe_unixtime($date)";
+    if ($@) {
+        return $maybe_unixtime;
+    }
+    else {
+        return sprintf(
+            "%s%s%s%s",
+            $maybe_unixtime,
+            $config->{'start-bracket'},
+            $date,
+            $config->{'end-bracket'},
+        );
+    }
 }
 
 sub _merge_opt {
@@ -55,6 +66,8 @@ sub _merge_opt {
     GetOptionsFromArray(
         \@argv,
         'f|format=s'    => \$config->{format},
+        'start-bracket=s' => \$config->{'start-bracket'},
+        'end-bracket=s'   => \$config->{'end-bracket'},
         'h|help'        => sub {
             _show_usage(1);
         },
@@ -65,6 +78,8 @@ sub _merge_opt {
     ) or _show_usage(2);
 
     $config->{format} ||= $DEFAULT_DATE_FORMAT;
+    $config->{'start-bracket'} ||= '(';
+    $config->{'end-bracket'}   ||= ')';
 }
 
 sub _show_usage {
