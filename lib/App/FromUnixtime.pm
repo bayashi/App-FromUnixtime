@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Getopt::Long qw/GetOptionsFromArray/;
 use POSIX qw/strftime/;
+use Config::CmdRC qw/.from_unixtimerc/;
 
 our $VERSION = '0.01';
 
@@ -77,9 +78,9 @@ sub _merge_opt {
         },
     ) or _show_usage(2);
 
-    $config->{format} ||= $DEFAULT_DATE_FORMAT;
-    $config->{'start-bracket'} ||= '(';
-    $config->{'end-bracket'}   ||= ')';
+    $config->{format} ||= RC->{format} || $DEFAULT_DATE_FORMAT;
+    $config->{'start-bracket'} ||= RC->{'start-bracket'} || '(';
+    $config->{'end-bracket'}   ||= RC->{'end-bracket'}   || ')';
 }
 
 sub _show_usage {

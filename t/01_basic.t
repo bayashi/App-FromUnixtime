@@ -5,6 +5,9 @@ use Capture::Tiny qw/ capture /;
 
 use App::FromUnixtime;
 
+no warnings 'redefine';
+*App::FromUnixtime::RC = sub { +{} };
+
 {
     open my $IN, '<', \<<'_INPUT_';
 id          1
