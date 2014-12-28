@@ -17,8 +17,11 @@ my $builder = Module::Build->new(
     },
     requires => {
         'perl' => '5.008001',
+        'strict' => 0,
+        'warnings' => 0,
         'Getopt::Long' => 2.42,
         'Pod::Usage' => 0,
+        'POSIX' => 0,
     },
     script_files        => [ 'script/from_unixtime' ],
     add_to_cleanup      => [ 'App-FromUnixtime-*' ],
