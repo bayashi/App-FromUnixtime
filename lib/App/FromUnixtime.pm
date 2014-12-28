@@ -13,7 +13,7 @@ our $MAYBE_UNIXTIME = join '|', (
     'unixtime',
 );
 
-our $DEFAULT_DATE_FORMAT = '%c';
+our $DEFAULT_DATE_FORMAT = '%a, %d %b %Y %H:%M:%S %z';
 
 sub run {
     my $self = shift;

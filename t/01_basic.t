@@ -10,23 +10,11 @@ use App::FromUnixtime;
 id          1
 name        John
 date        1419702037
-created_on  1419692400
-updated_on  1419692400
-created_at  1419702037
-updated_at  1419702037
 _INPUT_
     local *STDIN = *$IN;
-    stdout_is(
+    stdout_like(
         sub { App::FromUnixtime->run; },
-        <<'_EXPECTED_',
-id          1
-name        John
-date        1419702037(Sun Dec 28 02:40:37 2014)
-created_on  1419692400(Sun Dec 28 00:00:00 2014)
-updated_on  1419692400(Sun Dec 28 00:00:00 2014)
-created_at  1419702037(Sun Dec 28 02:40:37 2014)
-updated_at  1419702037(Sun Dec 28 02:40:37 2014)
-_EXPECTED_
+        qr/date\s+1419702037\([^\)]+\)/
     );
     close $IN;
 }
@@ -43,7 +31,7 @@ updated_at  1419702037
 _INPUT_
     local *STDIN = *$IN;
     stdout_is(
-        sub { App::FromUnixtime->run('--format' => '%F %T'); },
+        sub { App::FromUnixtime->run('--format' => '%Y-%m-%d %H:%M:%S'); },
         <<'_EXPECTED_',
 id          1
 name        John
