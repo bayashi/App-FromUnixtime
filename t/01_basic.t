@@ -35,4 +35,19 @@ _INPUT_
     like $stdout, qr/created_on\s+1419692400\(\d+-\d+-\d+ \d+:\d+:\d+\)/;
 }
 
+{
+    open my $IN, '<', \<<'_INPUT_';
+id          1
+name        John
+date        2147483648
+_INPUT_
+    local *STDIN = *$IN;
+    my ($stdout, $strerr) = capture {
+        App::FromUnixtime->run;
+    };
+    close $IN;
+    note $stdout if $ENV{AUTHOR_TEST};
+    like $stdout, qr/date\s+2147483648[^\(]/;
+}
+
 done_testing;
