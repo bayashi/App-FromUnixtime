@@ -65,13 +65,13 @@ sub _merge_opt {
 
     GetOptionsFromArray(
         \@argv,
-        'f|format=s'    => \$config->{format},
+        'f|format=s'      => \$config->{format},
         'start-bracket=s' => \$config->{'start-bracket'},
         'end-bracket=s'   => \$config->{'end-bracket'},
-        'h|help'        => sub {
+        'h|help' => sub {
             _show_usage(1);
         },
-        'v|version'   => sub {
+        'v|version' => sub {
             print "$0 $VERSION\n";
             exit 1;
         },
