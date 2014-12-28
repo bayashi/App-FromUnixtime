@@ -28,7 +28,7 @@ _INPUT_
     local *STDIN = *$IN;
     stdout_like(
         sub { App::FromUnixtime->run('--format' => '%Y-%m-%d %H:%M:%S'); },
-        qr/created_on\s+1419692400\(\d+-\d+-\d+ 00:00:00\)/
+        qr/created_on\s+1419692400\(\d+-\d+-\d+ \d+:\d+:\d+\)/
     );
     close $IN;
 }
