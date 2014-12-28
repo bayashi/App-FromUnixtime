@@ -11,6 +11,7 @@ our $MAYBE_UNIXTIME = join '|', (
     'updated_(?:at|on)',
     'date',
     'unixtime',
+    '_time',
 );
 
 our $DEFAULT_DATE_FORMAT = '%a, %d %b %Y %H:%M:%S %z';
