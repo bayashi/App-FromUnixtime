@@ -65,6 +65,13 @@ sub _from_unixtime {
 sub _merge_opt {
     my ($config, @argv) = @_;
 
+    _get_options($config, @argv);
+    _validate_options($config);
+}
+
+sub _get_options {
+    my ($config, @argv) = @_;
+
     GetOptionsFromArray(
         \@argv,
         'f|format=s'      => \$config->{format},
@@ -79,6 +86,10 @@ sub _merge_opt {
             exit 1;
         },
     ) or _show_usage(2);
+}
+
+sub _validate_options {
+    my ($config) = @_;
 
     $config->{format} ||= RC->{format} || $DEFAULT_DATE_FORMAT;
     $config->{'start-bracket'} ||= RC->{'start-bracket'} || '(';
