@@ -25,6 +25,8 @@ from_unixtime - to convert from unixtime to date suitably
     --start-bracket     change start bracket // '('
     --end-bracket       change end bracket   // ')'
 
+    --re                additional column condition
+
 =head1 AUTHOR
 
 Dai Okabayashi E<lt>bayashi@cpan.orgE<gt>
