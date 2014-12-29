@@ -32,7 +32,8 @@ sub _main {
 
     while ( my $line = <STDIN> ) {
         chomp $line;
-        if ($line =~ m!(?:$MAYBE_UNIXTIME)!) {
+        if ($line =~ m!(?:$MAYBE_UNIXTIME)!
+                || ($config->{_re} && $line =~ m!(?:$config->{_re})!) ) {
             $line =~ s/(\d+)/&_from_unixtime($1, $config)/eg;
         }
         print "$line\n";
@@ -69,6 +70,7 @@ sub _merge_opt {
         'f|format=s'      => \$config->{format},
         'start-bracket=s' => \$config->{'start-bracket'},
         'end-bracket=s'   => \$config->{'end-bracket'},
+        're=s@'           => \$config->{re},
         'h|help' => sub {
             _show_usage(1);
         },
@@ -81,6 +83,15 @@ sub _merge_opt {
     $config->{format} ||= RC->{format} || $DEFAULT_DATE_FORMAT;
     $config->{'start-bracket'} ||= RC->{'start-bracket'} || '(';
     $config->{'end-bracket'}   ||= RC->{'end-bracket'}   || ')';
+    if (ref RC->{re} eq 'ARRAY') {
+        push @{$config->{re}}, @{RC->{re}};
+    }
+    elsif (RC->{re}) {
+        push @{$config->{re}}, RC->{re};
+    }
+    if ($config->{re}) {
+        $config->{_re} = join '|', map { quotemeta $_;  } @{$config->{re}};
+    }
 }
 
 sub _show_usage {
