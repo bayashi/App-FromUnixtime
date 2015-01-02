@@ -49,20 +49,16 @@ sub _from_unixtime {
         return;
     }
 
-    my $date = eval { strftime($config->{format}, localtime($maybe_unixtime)) };
-    if ($@) {
-        return;
-    }
-    else {
-        my $replaced_unixtime = sprintf(
-            "%s%s%s%s",
-            $maybe_unixtime,
-            $config->{'start-bracket'},
-            $date,
-            $config->{'end-bracket'},
-        );
-        $$line_ref =~ s/$maybe_unixtime/$replaced_unixtime/;
-    }
+    my $date = strftime($config->{format}, localtime($maybe_unixtime));
+    my $replaced_unixtime = sprintf(
+        "%s%s%s%s",
+        $maybe_unixtime,
+        $config->{'start-bracket'},
+        $date,
+        $config->{'end-bracket'},
+    );
+
+    $$line_ref =~ s/$maybe_unixtime/$replaced_unixtime/;
 }
 
 sub _merge_opt {
