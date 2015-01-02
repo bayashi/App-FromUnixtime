@@ -32,33 +32,34 @@ sub _main {
 
     while ( my $line = <STDIN> ) {
         chomp $line;
-        if ($line =~ m!(?:$MAYBE_UNIXTIME)!
-                || ($config->{_re} && $line =~ m!(?:$config->{_re})!) ) {
-            $line =~ s/(\d+)/&_from_unixtime($1, $config)/eg;
+        if ($line =~ m!(?:$MAYBE_UNIXTIME)[^\d]*(\d+)!
+                || ($config->{_re} && $line =~ m!(?:$config->{_re})[^\d]*(\d+)!) ) {
+            _from_unixtime($1 => \$line, $config);
         }
         print "$line\n";
     }
 }
 
 sub _from_unixtime {
-    my ($maybe_unixtime, $config) = @_;
+    my ($maybe_unixtime, $line_ref, $config) = @_;
 
     if ($maybe_unixtime > 2**31-1) {
-        return $maybe_unixtime;
+        return;
     }
 
     my $date = eval { strftime($config->{format}, localtime($maybe_unixtime)) };
     if ($@) {
-        return $maybe_unixtime;
+        return;
     }
     else {
-        return sprintf(
+        my $replaced_unixtime = sprintf(
             "%s%s%s%s",
             $maybe_unixtime,
             $config->{'start-bracket'},
             $date,
             $config->{'end-bracket'},
         );
+        $$line_ref =~ s/$maybe_unixtime/$replaced_unixtime/;
     }
 }
 
