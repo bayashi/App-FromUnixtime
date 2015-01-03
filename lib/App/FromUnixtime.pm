@@ -23,8 +23,7 @@ sub run {
     my @argv = @_;
 
     my $config = +{};
-    _get_options($config, @argv);
-    _validate_options($config, @argv);
+    _get_options($config, \@argv);
 
     _main($config);
 }
@@ -80,10 +79,10 @@ sub _from_unixtime {
 }
 
 sub _get_options {
-    my ($config, @argv) = @_;
+    my ($config, $argv) = @_;
 
     GetOptionsFromArray(
-        \@argv,
+        $argv,
         'f|format=s'      => \$config->{format},
         'start-bracket=s' => \$config->{'start-bracket'},
         'end-bracket=s'   => \$config->{'end-bracket'},
@@ -96,10 +95,12 @@ sub _get_options {
             exit 1;
         },
     ) or _show_usage(2);
+
+    _validate_options($config, $argv);
 }
 
 sub _validate_options {
-    my ($config, @argv) = @_;
+    my ($config, $argv) = @_;
 
     $config->{format} ||= RC->{format} || $DEFAULT_DATE_FORMAT;
     $config->{'start-bracket'} ||= RC->{'start-bracket'} || '(';
@@ -113,7 +114,7 @@ sub _validate_options {
     if ($config->{re}) {
         $config->{_re} = join '|', map { quotemeta $_;  } @{$config->{re}};
     }
-    push @{$config->{unixtime}}, @argv;
+    push @{$config->{unixtime}}, @{$argv};
 }
 
 sub _show_usage {

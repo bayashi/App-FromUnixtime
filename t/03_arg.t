@@ -25,4 +25,12 @@ no warnings 'redefine';
     like $stdout, qr/1419702039\([^\)]+\)/;
 }
 
+{
+    my ($stdout, $strerr) = capture {
+        App::FromUnixtime->run('1419702037', '--format' => '%Y');
+    };
+    note $stdout if $ENV{AUTHOR_TEST};
+    like $stdout, qr/1419702037\(\d+\)/;
+}
+
 done_testing;
