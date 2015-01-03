@@ -23,7 +23,8 @@ sub run {
     my @argv = @_;
 
     my $config = +{};
-    _merge_opt($config, @argv);
+    _get_options($config, @argv);
+    _validate_options($config, @argv);
 
     _main($config);
 }
@@ -76,13 +77,6 @@ sub _from_unixtime {
     );
 
     $$line_ref =~ s/$maybe_unixtime/$replaced_unixtime/;
-}
-
-sub _merge_opt {
-    my ($config, @argv) = @_;
-
-    _get_options($config, @argv);
-    _validate_options($config, @argv);
 }
 
 sub _get_options {
