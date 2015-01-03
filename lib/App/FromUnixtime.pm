@@ -126,7 +126,7 @@ sub _show_usage {
     my $exitval = shift;
 
     require Pod::Usage;
-    Pod::Usage::pod2usage($exitval);
+    Pod::Usage::pod2usage(-exitval => $exitval);
 }
 
 1;
