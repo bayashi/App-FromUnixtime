@@ -2,6 +2,7 @@ package App::FromUnixtime;
 use strict;
 use warnings;
 use Getopt::Long qw/GetOptionsFromArray/;
+use IO::Interactive::Tiny;
 use POSIX qw/strftime/;
 use Config::CmdRC qw/.from_unixtimerc/;
 
@@ -30,12 +31,20 @@ sub run {
 sub _main {
     my $config = shift;
 
-    while ( my $line = <STDIN> ) {
-        chomp $line;
-        if ( _may_replace($line, $config) ) {
-            _from_unixtime($1 => \$line, $config);
+    if ( ! IO::Interactive::Tiny::is_interactive(*STDIN) ) {
+        while ( my $line = <STDIN> ) {
+            chomp $line;
+            if ( my $match = _may_replace($line, $config) ) {
+                _from_unixtime($match => \$line, $config);
+            }
+            print "$line\n";
         }
-        print "$line\n";
+    }
+    else {
+        for my $unixtime (@{$config->{unixtime}}) {
+            _from_unixtime($unixtime => \$unixtime, $config);
+            print "$unixtime\n";
+        }
     }
 }
 
@@ -73,7 +82,7 @@ sub _merge_opt {
     my ($config, @argv) = @_;
 
     _get_options($config, @argv);
-    _validate_options($config);
+    _validate_options($config, @argv);
 }
 
 sub _get_options {
@@ -96,7 +105,7 @@ sub _get_options {
 }
 
 sub _validate_options {
-    my ($config) = @_;
+    my ($config, @argv) = @_;
 
     $config->{format} ||= RC->{format} || $DEFAULT_DATE_FORMAT;
     $config->{'start-bracket'} ||= RC->{'start-bracket'} || '(';
@@ -110,6 +119,7 @@ sub _validate_options {
     if ($config->{re}) {
         $config->{_re} = join '|', map { quotemeta $_;  } @{$config->{re}};
     }
+    push @{$config->{unixtime}}, @argv;
 }
 
 sub _show_usage {
