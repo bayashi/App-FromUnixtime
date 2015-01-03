@@ -32,13 +32,21 @@ sub _main {
 
     while ( my $line = <STDIN> ) {
         chomp $line;
-        if ($line =~ m!(?:$MAYBE_UNIXTIME)[^\d]*(\d+)!
-                || ($config->{_re} && $line =~ m!(?:$config->{_re})[^\d]*(\d+)!)
-                || $line =~ m!^[\s\t\r\n]*(\d+)[\s\t\r\n]*$!
-        ) {
+        if ( _may_replace($line, $config) ) {
             _from_unixtime($1 => \$line, $config);
         }
         print "$line\n";
+    }
+}
+
+sub _may_replace {
+    my ($line, $config) = @_;
+
+    if ($line =~ m!(?:$MAYBE_UNIXTIME)[^\d]*(\d+)!
+                || ($config->{_re} && $line =~ m!(?:$config->{_re})[^\d]*(\d+)!)
+                || $line =~ m!^[\s\t\r\n]*(\d+)[\s\t\r\n]*$!
+    ) {
+        return 1;
     }
 }
 
