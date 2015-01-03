@@ -55,7 +55,7 @@ sub _may_replace {
                 || ($config->{_re} && $line =~ m!(?:$config->{_re})[^\d]*(\d+)!)
                 || $line =~ m!^[\s\t\r\n]*(\d+)[\s\t\r\n]*$!
     ) {
-        return 1;
+        return $1;
     }
 }
 
