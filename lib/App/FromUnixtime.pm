@@ -37,7 +37,9 @@ sub _main {
         while ( my $line = <STDIN> ) {
             chomp $line;
             if ( my $match = _may_replace($line, $config) ) {
-                _replace_unixtime($match => \$line, $config);
+                if ( ! _may_not_replace($line, $config) ) {
+                    _replace_unixtime($match => \$line, $config);
+                }
             }
             print "$line\n";
         }
@@ -58,6 +60,16 @@ sub _may_replace {
                 || $line =~ m!^[\s\t\r\n]*(\d+)[\s\t\r\n]*$!
     ) {
         return $1;
+    }
+}
+
+sub _may_not_replace {
+    my ($line, $config) = @_;
+
+    return unless $config->{'no-re'};
+
+    for my $no_re (@{$config->{'no-re'}}) {
+        return 1 if $line =~ m!$no_re!;
     }
 }
 
@@ -105,6 +117,7 @@ sub _get_options {
         'start-bracket=s' => \$config->{'start-bracket'},
         'end-bracket=s'   => \$config->{'end-bracket'},
         're=s@'           => \$config->{re},
+        'no-re=s@'        => \$config->{'no-re'},
         'h|help' => sub {
             _show_usage(1);
         },

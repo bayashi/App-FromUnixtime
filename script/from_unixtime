@@ -40,6 +40,7 @@ or filter unixtime suitably
     --end-bracket       change end bracket   // ')'
 
     --re                additional column condition
+    --no-re             no replace condition(this option has overriding priority)
 
 =head3 EXAMPLES
 
@@ -58,6 +59,14 @@ Also replace C<value> line with '--re' option.
     value         1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
     created_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
     updated_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
+
+If you do not want to replace then you use '--no-re' option
+
+    $ cat sql_result | from_unixtime --no-re updated
+    id    1
+    value         1419702037
+    created_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
+    updated_at    1419702037
 
 
 =head2 CONFIGURATION
