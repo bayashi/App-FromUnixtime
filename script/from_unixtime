@@ -22,11 +22,13 @@ or filter unixtime suitably
 
     $ cat sql_result
     id    1
+    value         1419702037
     created_at    1419702037
     updated_at    1419702037
 
     $ cat sql_result | from_unixtime
     id    1
+    value         1419702037
     created_at    1419702037(2014/12/28 02:40:37)
     updated_at    1419702037(2014/12/28 02:40:37)
 
@@ -38,6 +40,17 @@ or filter unixtime suitably
     --end-bracket       change end bracket   // ')'
 
     --re                additional column condition
+
+=head3 EXAMPLES
+
+Also replace C<value> line with '--re' option.
+
+    $ cat sql_result | from_unixtime --re value
+    id    1
+    value         1419702037(2014/12/28 02:40:37)
+    created_at    1419702037(2014/12/28 02:40:37)
+    updated_at    1419702037(2014/12/28 02:40:37)
+
 
 =head2 CONFIGURATION
 

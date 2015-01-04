@@ -180,6 +180,10 @@ C<App::FromUnixtime> exports B<from_unixtime> function for converting the string
 
     print from_unixtime('created_at 1419702037'); # created_at 1419702037(2014/12/28 02:40:37)
 
+    print from_unixtime('created_at 1419702037', '--format' => '%Y-%m-%d'); # created_at 1419702037(2014-12-28)
+
+See L<from_unixtime> command for more options.
+
 
 =head1 REPOSITORY
 
