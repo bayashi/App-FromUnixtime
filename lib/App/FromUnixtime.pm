@@ -37,14 +37,14 @@ sub _main {
         while ( my $line = <STDIN> ) {
             chomp $line;
             if ( my $match = _may_replace($line, $config) ) {
-                _from_unixtime($match => \$line, $config);
+                _replace_unixtime($match => \$line, $config);
             }
             print "$line\n";
         }
     }
     else {
         for my $unixtime (@{$config->{unixtime}}) {
-            _from_unixtime($unixtime => \$unixtime, $config);
+            _replace_unixtime($unixtime => \$unixtime, $config);
             print "$unixtime\n";
         }
     }
@@ -61,7 +61,7 @@ sub _may_replace {
     }
 }
 
-sub _from_unixtime {
+sub _replace_unixtime {
     my ($maybe_unixtime, $line_ref, $config) = @_;
 
     if ($maybe_unixtime > 2**31-1) {
@@ -89,7 +89,7 @@ sub from_unixtime {
     my @replaced_lines;
     for my $line ( split /\n/, $lines ) {
         if ( my $match = _may_replace($line, $config) ) {
-            _from_unixtime($match => \$line, $config);
+            _replace_unixtime($match => \$line, $config);
         }
         push @replaced_lines, $line;
     }
