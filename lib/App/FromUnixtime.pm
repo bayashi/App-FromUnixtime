@@ -5,6 +5,8 @@ use Getopt::Long qw/GetOptionsFromArray/;
 use IO::Interactive::Tiny;
 use POSIX qw/strftime/;
 use Config::CmdRC qw/.from_unixtimerc/;
+use Exporter 'import';
+our @EXPORT = qw/from_unixtime/;
 
 our $VERSION = '0.09';
 
@@ -78,6 +80,22 @@ sub _from_unixtime {
     $$line_ref =~ s/$maybe_unixtime/$replaced_unixtime/;
 }
 
+sub from_unixtime {
+    my ($lines, @argv) = @_;
+
+    my $config = +{};
+    _get_options($config, \@argv);
+
+    my @replaced_lines;
+    for my $line ( split /\n/, $lines ) {
+        if ( my $match = _may_replace($line, $config) ) {
+            _from_unixtime($match => \$line, $config);
+        }
+        push @replaced_lines, $line;
+    }
+    return join("\n", @replaced_lines);
+}
+
 sub _get_options {
     my ($config, $argv) = @_;
 
@@ -142,7 +160,7 @@ App::FromUnixtime - to convert from unixtime to date suitably
 
 =head1 DESCRIPTION
 
-See the L<from_unixtime> command for more detail.
+C<App::FromUnixtime> provides the L<from_unixtime> command and the B<from_unixtime> function.
 
 
 =head1 METHOD
@@ -150,6 +168,17 @@ See the L<from_unixtime> command for more detail.
 =head2 run
 
 run to convert process
+
+
+=head1 EXPORT FUNCTION
+
+=head2 from_unixtime($line, @options)
+
+C<App::FromUnixtime> exports B<from_unixtime> function for converting the string that may be included unixtime.
+
+    use App::FromUnixtime;
+
+    print from_unixtime('created_at 1419702037'); # created_at 1419702037(2014/12/28 02:40:37)
 
 
 =head1 REPOSITORY
