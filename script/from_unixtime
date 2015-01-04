@@ -16,7 +16,7 @@ from_unixtime - to convert from unixtime to date suitably
 replace unixtime args
 
     $ from_unixtime 1419702037
-    1419702037(2014/12/28 02:40:37)
+    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
 
 or filter unixtime suitably
 
@@ -29,8 +29,8 @@ or filter unixtime suitably
     $ cat sql_result | from_unixtime
     id    1
     value         1419702037
-    created_at    1419702037(2014/12/28 02:40:37)
-    updated_at    1419702037(2014/12/28 02:40:37)
+    created_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
+    updated_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
 
 =head2 OPTIONS
 
@@ -43,13 +43,21 @@ or filter unixtime suitably
 
 =head3 EXAMPLES
 
+To edit the date format.
+
+    $ cat sql_result | from_unixtime --format '%Y/%m/%d %H:%M:%S'
+    id    1
+    value         1419702037
+    created_at    1419702037(2014/12/28 02:40:37)
+    updated_at    1419702037(2014/12/28 02:40:37)
+
 Also replace C<value> line with '--re' option.
 
     $ cat sql_result | from_unixtime --re value
     id    1
-    value         1419702037(2014/12/28 02:40:37)
-    created_at    1419702037(2014/12/28 02:40:37)
-    updated_at    1419702037(2014/12/28 02:40:37)
+    value         1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
+    created_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
+    updated_at    1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
 
 
 =head2 CONFIGURATION

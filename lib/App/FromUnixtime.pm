@@ -178,7 +178,7 @@ C<App::FromUnixtime> exports B<from_unixtime> function for converting the string
 
     use App::FromUnixtime;
 
-    print from_unixtime('created_at 1419702037'); # created_at 1419702037(2014/12/28 02:40:37)
+    print from_unixtime('created_at 1419702037'); # created_at 1419702037(Sun, 28 Dec 2014 02:40:37 +0900)
 
     print from_unixtime('created_at 1419702037', '--format' => '%Y-%m-%d'); # created_at 1419702037(2014-12-28)
 
