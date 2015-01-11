@@ -55,8 +55,8 @@ sub _main {
 sub _may_replace {
     my ($line, $config) = @_;
 
-    if ($line =~ m!(?:$MAYBE_UNIXTIME)[^\d]*(\d+)!
-                || ($config->{_re} && $line =~ m!(?:$config->{_re})[^\d]*(\d+)!)
+    if ($line =~ m!(?:$MAYBE_UNIXTIME).*[^\d](\d+)!
+                || ($config->{_re} && $line =~ m!(?:$config->{_re}).*[^\d](\d+)!)
                 || $line =~ m!^[\s\t\r\n]*(\d+)[\s\t\r\n]*$!
     ) {
         return $1;
@@ -77,6 +77,10 @@ sub _replace_unixtime {
     my ($maybe_unixtime, $line_ref, $config) = @_;
 
     if ($maybe_unixtime > 2**31-1) {
+        return;
+    }
+
+    if ($config->{'min-time'} && $maybe_unixtime < $config->{'min-time'}) {
         return;
     }
 
@@ -118,6 +122,7 @@ sub _get_options {
         'end-bracket=s'   => \$config->{'end-bracket'},
         're=s@'           => \$config->{re},
         'no-re=s@'        => \$config->{'no-re'},
+        'min-time=i'      => \$config->{'min-time'},
         'h|help' => sub {
             _show_usage(1);
         },

@@ -147,4 +147,32 @@ _INPUT_
     *App::FromUnixtime::RC = sub { +{} };
 }
 
+{
+    open my $IN, '<', \<<'_INPUT_';
+id          1
+foo_date2   1419692400
+_INPUT_
+    local *STDIN = *$IN;
+    my ($stdout, $strerr) = capture {
+        App::FromUnixtime->run;
+    };
+    close $IN;
+    note $stdout if $ENV{AUTHOR_TEST};
+    like $stdout, qr/foo_date2\s+1419692400\(.+\)/;
+}
+
+{
+    open my $IN, '<', \<<'_INPUT_';
+id          1
+foo_date2   419692400
+_INPUT_
+    local *STDIN = *$IN;
+    my ($stdout, $strerr) = capture {
+        App::FromUnixtime->run('--min-time' => 1000000000);
+    };
+    close $IN;
+    note $stdout if $ENV{AUTHOR_TEST};
+    like $stdout, qr/foo_date2\s+419692400[^\(]/;
+}
+
 done_testing;

@@ -41,6 +41,7 @@ or filter unixtime suitably
 
     --re                additional column condition
     --no-re             no replace condition(this option has overriding priority)
+    --min-time          no replace if the value is smaller than this option
 
 =head3 EXAMPLES
 
