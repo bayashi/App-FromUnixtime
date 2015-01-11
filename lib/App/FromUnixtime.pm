@@ -13,6 +13,10 @@ our $VERSION = '0.10';
 our $MAYBE_UNIXTIME = join '|', (
     'created_(?:at|on)',
     'updated_(?:at|on)',
+    'released_(?:at|on)',
+    'closed_(?:at|on)',
+    'published_(?:at|on)',
+    'expired_(?:at|on)',
     'date',
     'unixtime',
     '_time',

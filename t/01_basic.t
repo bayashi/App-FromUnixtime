@@ -175,4 +175,18 @@ _INPUT_
     like $stdout, qr/foo_date2\s+419692400[^\(]/;
 }
 
+{
+    open my $IN, '<', \<<'_INPUT_';
+id          1
+expired_at  1419692400
+_INPUT_
+    local *STDIN = *$IN;
+    my ($stdout, $strerr) = capture {
+        App::FromUnixtime->run;
+    };
+    close $IN;
+    note $stdout if $ENV{AUTHOR_TEST};
+    like $stdout, qr/expired_at\s+1419692400\(.+\)/;
+}
+
 done_testing;
