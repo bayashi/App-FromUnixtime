@@ -1,5 +1,9 @@
 Revision history for Perl extension App::FromUnixtime
 
+0.12    Mon Jan 26 04:32:59 JST 2015
+        - add LICENSE file
+        - add ignore cache parameters for badges in README.pod
+
 0.11    Sun Jan 11 11:40:24 JST 2015
         - add column conditions to replace
         - fix regexp: to support the numberd column like 'foo_date2'

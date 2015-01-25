@@ -5,7 +5,7 @@ This is Perl module B<App::FromUnixtime>.
 
 =begin html
 
-<a href="http://travis-ci.org/bayashi/App-FromUnixtime"><img src="https://secure.travis-ci.org/bayashi/App-FromUnixtime.png"/></a> <a href="https://coveralls.io/r/bayashi/App-FromUnixtime"><img src="https://coveralls.io/repos/bayashi/App-FromUnixtime/badge.png?branch=master"/></a>
+<a href="http://travis-ci.org/bayashi/App-FromUnixtime"><img src="https://secure.travis-ci.org/bayashi/App-FromUnixtime.png?_t=1422214464"/></a> <a href="https://coveralls.io/r/bayashi/App-FromUnixtime"><img src="https://coveralls.io/repos/bayashi/App-FromUnixtime/badge.png?_t=1422214464&branch=master"/></a>
 
 =end html
 
