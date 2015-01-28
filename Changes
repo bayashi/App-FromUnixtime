@@ -1,5 +1,8 @@
 Revision history for Perl extension App::FromUnixtime
 
+0.13    Wed Jan 28 22:28:25 JST 2015
+        - fix wrong test
+
 0.12    Mon Jan 26 04:32:59 JST 2015
         - add LICENSE file
         - add ignore cache parameters for badges in README.pod
