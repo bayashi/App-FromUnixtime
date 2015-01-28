@@ -29,7 +29,7 @@ _TEXT_
         '--end-bracket'   => ']',
     );
 
-    like $replaced, qr/date 1419702037\[[^\)]+\]/;
+    like $replaced, qr/date 1419702037\[[^\]]+\]/;
 }
 
 done_testing;
