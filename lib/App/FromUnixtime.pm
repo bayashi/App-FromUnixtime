@@ -8,7 +8,7 @@ use Config::CmdRC qw/.from_unixtimerc/;
 use Exporter 'import';
 our @EXPORT = qw/from_unixtime/;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 our $MAYBE_UNIXTIME = join '|', (
     'created_(?:at|on)',
