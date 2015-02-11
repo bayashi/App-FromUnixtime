@@ -12,6 +12,8 @@ This is Perl module B<App::FromUnixtime>.
 
 =head1 INSTALLATION
 
+=head2 Installing to system perl
+
 App::FromUnixtime installation is straightforward. If your CPAN shell is set up,
 you should just be able to do
 
@@ -25,6 +27,14 @@ Download it, unpack it, then build it as per the usual:
 Then install it:
 
     % make install
+
+=head2 Downloading the standalone executable
+
+You can also copy the standalone executable to whatever location you'd like.
+
+    % cd ~/bin
+    % curl -LO http://bit.ly/1EXlhjM
+    % chmod +x from_unixtime
 
 
 =head1 DOCUMENTATION
