@@ -91,7 +91,7 @@ sub _replace_unixtime {
     my $date = strftime($config->{format}, localtime($maybe_unixtime));
     my $replaced_unixtime = sprintf(
         "%s%s%s%s",
-        $maybe_unixtime,
+        $config->{'replace'} ? '' : $maybe_unixtime,
         $config->{'start-bracket'},
         $date,
         $config->{'end-bracket'},
@@ -127,6 +127,7 @@ sub _get_options {
         're=s@'           => \$config->{re},
         'no-re=s@'        => \$config->{'no-re'},
         'min-time=i'      => \$config->{'min-time'},
+        'replace'         => \$config->{'replace'},
         'h|help' => sub {
             _show_usage(1);
         },
