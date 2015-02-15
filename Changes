@@ -1,5 +1,9 @@
 Revision history for Perl extension App::FromUnixtime
 
+0.15    Sun Feb 15 20:56:01 JST 2015
+        - add --replace option
+        - add the script for the standalone executable to whatever location you'd like
+
 0.14    Mon Feb  2 08:28:58 JST 2015
         - add test for finding out no use vars
 
