@@ -1,5 +1,8 @@
 Revision history for Perl extension App::FromUnixtime
 
+0.17    Sat Feb 28 11:08:39 JST 2015
+        - add one line doc about --replace option
+
 0.16    Sun Feb 15 21:34:12 JST 2015
         - remove the script(packed from_unixtime) from tar.gz
 
